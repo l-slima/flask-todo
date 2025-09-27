@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>To-Do List</h1>
+<form action="{{ url_for('add_task') }}" method="POST">
+    <input type="text" name="task" placeholder="New task">
+    <button type="submit">Add</button>
+</form>
+
+<ul>
+    {% for task in tasks %}
+        <li>
+            {% if task.done %}
+                <s>{{ task.name }}</s>
+            {% else %}
+                {{ task.name }}
+            {% endif %}
+            <a href="{{ url_for('done_task', task_id=loop.index0) }}">✔</a>
+            <a href="{{ url_for('delete_task', task_id=loop.index0) }}">🗑️</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
